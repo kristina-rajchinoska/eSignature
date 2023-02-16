@@ -1,0 +1,19 @@
+export const httpStatusCodes = {
+    CREATED: 201,
+    BAD_REQUEST: 400,
+    UNAUTHORIZED: 401,
+    NOT_FOUND: 404,
+    CONFLICT: 409,
+    INTERNAL_SERVER: 500,
+    FORBIDDEN: 403,
+}
+
+export const httpStatusCodesDescription = {
+    CREATED: "CREATED",
+    BAD_REQUEST: "BAD_REQUEST",
+    UNAUTHORIZED: "UNAUTHORIZED",
+    NOT_FOUND: "NOT_FOUND",
+    CONFLICT: "CONFLICT",
+    INTERNAL_SERVER: "INTERNAL_SERVER",
+    FORBIDDEN: "FORBIDDEN",
+}
