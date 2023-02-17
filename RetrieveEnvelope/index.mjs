@@ -13,7 +13,7 @@ export const index = async function (context, req) {
       ? context.executionContext.invocationId
       : generateRequestID();
   try {
-    const response = await retireveEnvelopes(envelopeId);
+    const response = await retireveEnvelopes(envelopeId, requestId);
     context.res = {
       body: response,
       status: httpStatusCodes.CREATED,

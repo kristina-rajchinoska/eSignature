@@ -1,8 +1,15 @@
 import { authenticate } from "./userLoginService.mjs";
 import docusign from "docusign-esign";
+import { api400Error } from "../utils/api400Error.mjs";
+import(api);
 
-export async function retireveEnvelopes(envelopeId) {
-  let accountInfo = await authenticate();
+export async function retireveEnvelopes(envelopeId, requestId) {
+  let accountInfo;
+  try {
+    accountInfo = await authenticate();
+  } catch (error) {
+    throw new api400Error("Unauthorized");
+  }
   console.log({ accountInfo });
 
   let dsApiClient = new docusign.ApiClient();
@@ -13,18 +20,20 @@ export async function retireveEnvelopes(envelopeId) {
   );
 
   console.log("test");
-  let envelopesApi = new docusign.EnvelopesApi(dsApiClient),
-    results = null;
+  try {
+    let envelopesApi = new docusign.EnvelopesApi(dsApiClient),
+      results = null;
 
-  console.log({ envelopesApi });
-
-  // Step 1. Call Envelopes::get
-  // Exceptions will be caught by the calling function
-  results = await envelopesApi.getEnvelope(
-    accountInfo.apiAccountId,
-    envelopeId,
-    null
-  );
-  console.log({ results });
-  return results;
+    // Step 1. Call Envelopes::get
+    // Exceptions will be caught by the calling function
+    results = await envelopesApi.getEnvelope(
+      accountInfo.apiAccountId,
+      envelopeId,
+      null
+    );
+    console.log({ results });
+    return results;
+  } catch (error) {
+    throw error;
+  }
 }

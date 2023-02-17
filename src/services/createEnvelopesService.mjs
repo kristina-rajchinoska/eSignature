@@ -11,7 +11,7 @@ const demoDocsPath = path.resolve(__dirname, "../demo_documents");
 const doc2File = "World_Wide_Corp_Battle_Plan_Trafalgar.docx";
 const doc3File = "World_Wide_Corp_lorem.pdf";
 
-export const sendEnvelope = async () => {
+export const sendEnvelope = async (requestId) => {
   let accountInfo = await authenticate();
   let args = getArgs(
     accountInfo.apiAccountId,
