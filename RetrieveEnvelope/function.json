@@ -5,8 +5,8 @@
       "type": "httpTrigger",
       "direction": "in",
       "name": "req",
-      "methods": ["post"],
-      "route": "auth"
+      "methods": ["get"],
+      "route": "envelopes/{id}"
     },
     {
       "type": "http",

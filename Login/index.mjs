@@ -8,7 +8,7 @@ export const index = async function (context, req) {
       ? context.executionContext.invocationId
       : generateRequestID();
   try {
-    const response = await authenticate();
+    const response = await authenticate(requestId);
     context.res = {
       body: response,
       status: httpStatusCodes.CREATED,

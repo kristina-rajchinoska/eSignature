@@ -29,7 +29,7 @@ function getConsent() {
   }
 }
 
-export async function authenticate() {
+export async function authenticate(requestId) {
   const jwtLifeSec = 10 * 60, // requested lifetime for the JWT is 10 min
     dsApi = new docusign.ApiClient();
   dsApi.setOAuthBasePath(jwtConfig.dsOauthServer.replace("https://", "")); // it should be domain only.

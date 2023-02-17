@@ -8,7 +8,7 @@ export const index = async function (context, req) {
       ? context.executionContext.invocationId
       : generateRequestID();
   try {
-    const response = await sendEnvelope();
+    const response = await sendEnvelope(requestId);
     context.res = {
       body: response,
       status: httpStatusCodes.CREATED,
