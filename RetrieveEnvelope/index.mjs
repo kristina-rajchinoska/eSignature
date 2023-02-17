@@ -1,14 +1,19 @@
 import { generateRequestID } from "../src/utils/generateRequestID.mjs";
 import { httpStatusCodes } from "../src/utils/httpStatusCodes.mjs";
-import { auth } from "../src/services/authenticationService.mjs";
+import { retireveEnvelopes } from "../src/services/retrieveEnvelopeService.mjs";
+import { api400Error } from "../src/utils/api400Error.mjs";
 
 export const index = async function (context, req) {
+  let envelopeId = req?.params?.id;
+  if (!envelopeId) {
+    throw new api400Error("Bad request");
+  }
   const requestId =
     context && context.executionContext.invocationId
       ? context.executionContext.invocationId
       : generateRequestID();
   try {
-    const response = await auth();
+    const response = await retireveEnvelopes(envelopeId);
     context.res = {
       body: response,
       status: httpStatusCodes.CREATED,
