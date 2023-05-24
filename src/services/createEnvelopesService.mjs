@@ -19,8 +19,11 @@ export const sendEnvelope = async (requestId) => {
     accountInfo.basePath
   );
   let dsApiClient = new docusign.ApiClient();
-  dsApiClient.setBasePath(args.basePath);
-  dsApiClient.addDefaultHeader("Authorization", "Bearer " + args.accessToken);
+  dsApiClient.setBasePath(accountInfo.basePath);
+  dsApiClient.addDefaultHeader(
+    "Authorization",
+    "Bearer " + accountInfo.accessToken
+  );
   let envelopesApi = new docusign.EnvelopesApi(dsApiClient),
     results = null;
 
@@ -50,23 +53,28 @@ function getArgs(apiAccountId, accessToken, basePath) {
   let ccEmail = "razmoska_kristina@yahoo.com";
   let ccName = "KristinaCC";
 
-  const envelopeArgs = {
-    signerEmail: signerEmail,
-    signerName: signerName,
-    ccEmail: ccEmail,
-    ccName: ccName,
-    status: "sent",
-    doc2File: path.resolve(demoDocsPath, doc2File),
-    doc3File: path.resolve(demoDocsPath, doc3File),
-  };
-  const args = {
-    accessToken: accessToken,
-    basePath: basePath,
-    accountId: apiAccountId,
-    envelopeArgs: envelopeArgs,
-  };
+  try {
+    const envelopeArgs = {
+      signerEmail: signerEmail,
+      signerName: signerName,
+      ccEmail: ccEmail,
+      ccName: ccName,
+      status: "sent",
+      doc2File: path.resolve(demoDocsPath, doc2File),
+      doc3File: path.resolve(demoDocsPath, doc3File),
+    };
+    const args = {
+      accessToken: accessToken,
+      basePath: basePath,
+      accountId: apiAccountId,
+      envelopeArgs: envelopeArgs,
+    };
 
-  return args;
+    return args;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
 }
 
 function makeEnvelope(args) {
@@ -178,13 +186,19 @@ function makeEnvelope(args) {
       anchorYOffset: "30",
       anchorUnits: "pixels",
       anchorXOffset: "30",
+    }),
+    signHere4 = docusign.SignHere.constructFromObject({
+      anchorString: "/sn2/",
+      anchorYOffset: "30",
+      anchorUnits: "pixels",
+      anchorXOffset: "30",
     });
   // Tabs are set per recipient / signer
   let signer1Tabs = docusign.Tabs.constructFromObject({
     signHereTabs: [signHere1, signHere2],
   });
   let signer2Tabs = docusign.Tabs.constructFromObject({
-    signHereTabs: [signHere3, signHere2],
+    signHereTabs: [signHere3, signHere4],
   });
   signer1.tabs = signer1Tabs;
   signer2.tabs = signer2Tabs;
