@@ -186,13 +186,19 @@ function makeEnvelope(args) {
       anchorYOffset: "30",
       anchorUnits: "pixels",
       anchorXOffset: "30",
+    }),
+    signHere4 = docusign.SignHere.constructFromObject({
+      anchorString: "/sn2/",
+      anchorYOffset: "30",
+      anchorUnits: "pixels",
+      anchorXOffset: "30",
     });
   // Tabs are set per recipient / signer
   let signer1Tabs = docusign.Tabs.constructFromObject({
     signHereTabs: [signHere1, signHere2],
   });
   let signer2Tabs = docusign.Tabs.constructFromObject({
-    signHereTabs: [signHere3, signHere2],
+    signHereTabs: [signHere3, signHere4],
   });
   signer1.tabs = signer1Tabs;
   signer2.tabs = signer2Tabs;
